@@ -42,6 +42,29 @@ app.delete("/users/:userId/delete", function(request,response){
     response.status(200).send({error: false, message: "İstediğimiz bir kullanıcınıyı silmek için bu endpointi kullanacağız", data: {userId: request.params.userId}})
 });
 
+// INVENTORY
+app.get("/inventory", function(request,response){
+    response.status(200).send({error: false, message: "Uygulamadaki tüm itemleri getirecek", data: request.body})
+});
+
+app.get("/inventory/:userId", function(request,response){
+    response.status(200).send({error: false, message: "Kullanıcının tüm envanterini getirmek için kullanacağız", data: request.body})
+});
+
+app.post("/inventory/:userId", function(request,response){
+    response.status(200).send({error: false, message: "Yeni item eklemek için kullanılacak", data: request.body})
+});
+
+app.put("/inventory/:itemId/update", function(request,response){
+    response.status(200).send({error: false, message: "Envanterdeki itemi güncellemek için kullanılacak", data: request.body})
+});
+
+app.delete("/inventory/:itemId/delete", function(request,response){
+    response.status(200).send({error: false, message: "Envanterden item silmek için kullanacağız", data: request.body})
+});
+
+
+
 // DEFAULT
 app.get("/", function(request,response){
     response.send("Hello World! COMP202 and COMP204")
