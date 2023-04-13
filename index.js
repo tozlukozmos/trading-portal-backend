@@ -111,7 +111,7 @@ app.use((req, res, next) => {
   next();
 })
 
-const port = process.env.MYSQLPORT || 3000;
+const port = process.env.PORT || 3000;
 
 app.listen(port, function () {
   console.log("Started application on port %d", port);
