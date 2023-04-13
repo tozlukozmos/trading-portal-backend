@@ -1,5 +1,6 @@
 const database = {
   credentials: {
+    port: process.env.MYSQLPORT,
     host: process.env.MYSQLHOST,
     user: process.env.MYSQLUSER,
     password: process.env.MYSQLPASSWORD,
