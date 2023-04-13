@@ -47,16 +47,20 @@ $ CREATE TABLE users (
 Do not forget to create your own .env file at the root of the project folder. This is how it should looks like
 ```
 $ PORT=3000
-$ MYSQL_HOST="localhost"
-$ MYSQL_USER="your_mysql_user_name"
-$ MYSQL_PASSWORD="your_mysql_password"
-$ MYSQL_DATABASE="tradingdb"
+$ MYSQLPORT=3306
+$ MYSQLHOST="localhost"
+$ MYSQLUSER="your_mysql_user_name"
+$ MYSQLPASSWORD="your_mysql_password"
+$ MYSQLDATABASE="tradingdb"
 ```
 
 <br/>
 
 ## Routes
 There is only basic routes for a user.
+
+Base url: https://trading-portal-backend-production.up.railway.app/
+
 | HTTP Methods  | Endpoints                |
 | ------------- | ------------------------ | 
 | `POST`        | /api/auth/login              | 
