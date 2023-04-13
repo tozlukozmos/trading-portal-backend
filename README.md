@@ -59,12 +59,12 @@ $ MYSQL_DATABASE="tradingdb"
 There is only basic routes for a user.
 | HTTP Methods  | Endpoints                |
 | ------------- | ------------------------ | 
-| `POST`        | /auth/login              | 
-| `POST`        | /auth/register           | 
-| `GET`         | /users                   | 
-| `GET`         | /users/:userId           | 
-| `PUT`         | /users/:userId/update    | 
-| `DELETE`      | /users/:userId/delete    | 
+| `POST`        | /api//auth/login              | 
+| `POST`        | /api//auth/register           | 
+| `GET`         | /api/users                   | 
+| `GET`         | /api/users/:userId           | 
+| `PUT`         | /api/users/:userId/update    | 
+| `DELETE`      | /api/users/:userId/delete    | 
 
 <br/>
 
