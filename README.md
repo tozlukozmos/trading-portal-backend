@@ -59,8 +59,8 @@ $ MYSQL_DATABASE="tradingdb"
 There is only basic routes for a user.
 | HTTP Methods  | Endpoints                |
 | ------------- | ------------------------ | 
-| `POST`        | /api//auth/login              | 
-| `POST`        | /api//auth/register           | 
+| `POST`        | /api/auth/login              | 
+| `POST`        | /api/auth/register           | 
 | `GET`         | /api/users                   | 
 | `GET`         | /api/users/:userId           | 
 | `PUT`         | /api/users/:userId/update    | 
