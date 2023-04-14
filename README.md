@@ -27,19 +27,7 @@ $ node index.js
 <br/>
 
 ## MySQL Script to Get Started
-```
-$ CREATE DATABASE tradingdb CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-$ USE tradingdb;
-$ CREATE TABLE users (
-  id INT NOT NULL AUTO_INCREMENT,
-  first_name VARCHAR(50),
-  last_name VARCHAR(50),
-  password VARCHAR(50) NOT NULL,
-  email VARCHAR(50) NOT NULL UNIQUE,
-  phone_number VARCHAR(50),
-  PRIMARY KEY (id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=5;
-```
+### see db_get_started_script.sql file at the root of the project folder.
 
 <br/>
 
