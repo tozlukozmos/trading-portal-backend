@@ -12,6 +12,7 @@ app.use(express.urlencoded({extended: true}));
 // ROUTES
 const userRoutes = require("./src/routes/user");
 const authRoutes = require("./src/routes/auth");
+const productRoutes = require("./src/routes/product");
 
 const corsOptions = {
   credentials: true,
@@ -37,6 +38,11 @@ app.use(cors(corsOptions));
 // USER
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
+
+//PRODUCT
+app.use("/api/products", productRoutes);
+
+
 
 // INVENTORY
 app.get(
