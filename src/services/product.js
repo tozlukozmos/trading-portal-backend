@@ -35,16 +35,16 @@ class ProductService {
 
       Object.keys(data).map(item => {
         switch (item) {
-          case 'firstName':
+          case 'title':
             queries.push(`first_name='${data.title}'`)
             break;
-          case 'lastName':
+          case 'description':
             queries.push(`last_name='${data.description}'`)
             break;
-          case 'password':
+          case 'image':
             queries.push(`password='${data.image}'`)
             break;
-          case 'email':
+          case 'userId':
             queries.push(`email='${data.userId}'`)
             break;
           default:
