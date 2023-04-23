@@ -96,7 +96,7 @@ class ProductController {
 
   async deleteProduct(req, res) {
     try {
-      await UserService.delete(req.params.productId);
+      await ProductService.delete(req.params.productId);
       res.status(200).send({
         error: false,
         message: "Ürün başarıyla silindi!",
