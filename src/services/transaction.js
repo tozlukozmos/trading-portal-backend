@@ -4,50 +4,34 @@ class TransactionService {
     async create(data) {
       const result = await db.query(
         `INSERT INTO transactions 
-        (user_id, product_id, type, amount, unit) 
+        (first_product_id, second_product_id) 
         VALUES 
-        ('${data.userId}', '${data.productId}', '${data.type}', '${data.amount}', '${data.unit}')`
+        ('${data.firstProductId}', '${data.secondProductId}')`
       );
     
       return result.info;
     }
-    async login(data){
-      const result = await db.query(
-        `SELECT 
-        * 
-        FROM transactions WHERE amount='${data.amount}' AND type='${data.type}'`
-      );
 
-      return result;
-    }
     async read(id) {
       const result = await db.query(
         `SELECT 
-        id, user_id, product_id, type, amount, unit 
+        id, first_product_id, second_product_id 
         FROM transactions ${id && `WHERE id='${id}'`}`
       );
 
       return result;
     }
+
     async update(id, data) {
       const queries = [];
 
       Object.keys(data).map(item => {
         switch (item) {
-          case 'userId':
-            queries.push(`user_id='${data.userId}'`)
+          case 'firstProductId':
+            queries.push(`first_product_id='${data.firstProductId}'`)
             break;
-          case 'productId':
-            queries.push(`product_id='${data.productId}'`)
-            break;
-          case 'type':
-            queries.push(`type='${data.type}'`)
-            break;
-          case 'amount':
-            queries.push(`amount='${data.amount}'`)
-            break;
-          case 'unit':
-            queries.push(`unit='${data.unit}'`)
+          case 'secondProductId':
+            queries.push(`second_product_id='${data.secondProductId}'`)
             break;
           default:
             break;
@@ -64,6 +48,7 @@ class TransactionService {
 
       return result;
     }
+
     async delete(id) {
       const result = await db.query(
         `DELETE FROM transaction

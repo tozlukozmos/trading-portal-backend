@@ -1,4 +1,4 @@
-const UserService = require('../services/user');
+const TransactionService = require('../services/transaction');
 
 class TransactionController {
   async createTransaction(req, res) {

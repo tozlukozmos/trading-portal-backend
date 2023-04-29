@@ -1,4 +1,4 @@
-const ProductService = require('../services/user');
+const ProductService = require('../services/product');
 
 class ProductController {
   async createProduct(req, res) {
@@ -43,9 +43,9 @@ class ProductController {
     }
   }
 
-    async readProducts(req, res) {
+  async readProducts(req, res) {
     try {
-      const result = await ProductService.read();
+      const result = await ProductService.readAll();
       res.status(200).send({
         error: false,
         message: "Ürünler başarıyla getirildi!",
@@ -62,7 +62,7 @@ class ProductController {
 
   async readUserProducts(req, res) {
     try {
-      const result = await ProductService.readUserProducts();
+      const result = await ProductService.readUserProducts(req.params.userId);
       res.status(200).send({
         error: false,
         message: "Kullanıcının ürünleri başarıyla getirildi!",
@@ -89,6 +89,75 @@ class ProductController {
       res.status(500).send({
         error: true,
         message: "Ürün güncellenirken bir hata oluştu!",
+        result: error.sqlMessage,
+      });
+    }
+  }
+
+  async likeProduct(req, res) {
+    try {
+      await ProductService.like(req.params.productId, req.body.userId);
+      res.status(200).send({
+        error: false,
+        message: "Ürünü başarıyla beğendiniz!",
+        result: null,
+      });
+    } catch (error) {
+      res.status(500).send({
+        error: true,
+        message: "Ürünü beğenirken bir hata oluştu!",
+        result: error.sqlMessage,
+      });
+    }
+  }
+
+  async unlikeProduct(req, res) {
+    try {
+      await ProductService.unlike(req.params.productId, req.body.userId);
+      res.status(200).send({
+        error: false,
+        message: "",
+        result: null,
+      });
+    } catch (error) {
+      res.status(500).send({
+        error: true,
+        message: "Beklenmedik bir hata oluştu!",
+        result: error.sqlMessage,
+      });
+    }
+  }
+
+  async deleteCommentProduct(req, res) {
+    try {
+      await ProductService.deleteComment(req.params.commentId);
+      res.status(200).send({
+        error: false,
+        message: "",
+        result: null,
+      });
+    } catch (error) {
+      res.status(500).send({
+        error: true,
+        message: "Beklenmedik bir hata oluştu!",
+        result: error.sqlMessage,
+      });
+    }
+  }
+
+  async commentProduct(req, res) {
+    try {
+      await ProductService.comment(req.params.productId, req.body);
+      res.status(200).send({
+        error: false,
+        message: "Ürüne başarıyla yorum yaptınız!",
+        result: null,
+      });
+    } catch (error) {
+      console.log("error", error);
+      res.status(500).send({
+        error: true,
+        message: "Ürüne yorum yaparken bir hata oluştu!",
         result: error.sqlMessage,
       });
     }
