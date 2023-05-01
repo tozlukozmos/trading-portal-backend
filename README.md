@@ -45,23 +45,53 @@ $ MYSQLDATABASE="tradingdb"
 <br/>
 
 ## Routes
-There is only basic routes for a user.
-
 Base url: https://trading-portal-backend-production.up.railway.app/
+
+## USER
 
 | HTTP Methods  | Endpoints                |
 | ------------- | ------------------------ | 
-| `POST`        | /api/auth/login              | 
-| `POST`        | /api/auth/register           | 
-| `GET`         | /api/users                   | 
-| `GET`         | /api/users/:userId           | 
-| `PUT`         | /api/users/:userId/update    | 
-| `DELETE`      | /api/users/:userId/delete    | 
+| `POST`        | /api/auth/login | 
+| `POST`        | /api/auth/register | 
+| `GET`         | /api/users | 
+| `GET`         | /api/users/:userId | 
+| `GET`         | /api/users/:userId/products | 
+| `GET`         | /api/users/:userId/transactions | 
+| `PUT`         | /api/users/:userId/update | 
+| `DELETE`      | /api/users/:userId/delete | 
+
+## PRODUCT
+
+* You should also send signed userId in the HTTP body section.
+
+| HTTP Methods  | Endpoints                |
+| ------------- | ------------------------ | 
+| `POST*`        | /api/products             | 
+| `GET`        | /api/products          | 
+| `GET`        | /api/products/:productId         | 
+| `PUT`        | /api/products/:productId/update         | 
+| `POST*`        | /api/products/:productId/like        | 
+| `DELETE*`        | /api/products/:productId/unlike         | 
+| `POST*`        | /api/products/:productId/comment         | 
+| `DELETE`        | /api/products/:productId/comments/:commentId/delete         |
+| `DELETE`        | /api/products/:productId/delete         |  
+
+## TRANSACTION
+
+| HTTP Methods  | Endpoints                |
+| ------------- | ------------------------ | 
+| `POST`        | /api/transactions             | 
+| `GET`        | /api/transactions          | 
+| `GET`        | /api/transactions/:transactionId         | 
+| `PUT`        | /api/transactions/:transactionId/update         | 
+| `DELETE`        | /api/transactions/:transactionId/delete         |  
 
 <br/>
 
-## Sample user data
-You can use this sample user data in HTTP request body.
+## Sample data
+You can use these sample data in HTTP request body.
+
+### USER
 ```json
 {
     "firstName": "Gerald",
@@ -69,6 +99,22 @@ You can use this sample user data in HTTP request body.
     "email": "gerald.mitchell@example.com",
     "password": "kdsh7323£#05",
     "phoneNumber": "05111111111"
+}
+```
+### PRODUCT
+```json
+{
+    "title": "iPhone 9",
+    "description": "An apple mobile which is nothing like apple",
+    "image": "https://i.dummyjson.com/data/products/1/thumbnail.jpg"
+}
+```
+
+### TRANSACTION
+```json
+{
+    "firstProductId": 112,
+    "secondProductId": 897,
 }
 ```
 
