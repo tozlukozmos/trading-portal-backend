@@ -1,6 +1,4 @@
 const express = require("express");
-const swaggerJSDoc = require('swagger-jsdoc');
-const swaggerUi = require('swagger-ui-express');
 const helmet = require("helmet");
 const cors = require("cors");
 
@@ -10,38 +8,6 @@ var app = express();
 app.use(express.json());
 app.use(helmet());
 app.use(express.urlencoded({extended: true}));
-
-
-
-// SWAGGER
-
-const swaggerDefinition = {
-  openapi: '3.0.0',
-  info: {
-    title: 'API Title',
-    version: '1.0.0',
-    description: 'API Description',
-  },
-  servers: [
-    {
-      url: 'http://localhost:3000',
-      description: 'Development server',
-    },
-  ],
-};
-
-const options = {
-  swaggerDefinition,
-  apis: ['./src/routes/*.js'],
-};
-const swaggerSpec = swaggerJSDoc(options);
-
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-
-
-
-
-
 
 // ROUTES
 const userRoutes = require("./src/routes/user");

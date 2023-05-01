@@ -65,7 +65,7 @@ class TransactionController {
 
   async readUserTransactions(req, res) {
     try {
-      const result = await TransactionService.readUserTransactions();
+      const result = await TransactionService.readUserTransactions(req.params.userId);
       res.status(200).send({
         error: false,
         message: "Kullanıcının işlemleri başarıyla yapıldı!",
@@ -83,7 +83,7 @@ class TransactionController {
 
   async updateTransaction(req, res) {
     try {
-      await ProductService.update(req.params.transactionId, req.body);
+      await TransactionService.update(req.params.transactionId, req.body);
       res.status(200).send({
         error: false,
         message: "İşlem başarıyla güncellendi!",
@@ -101,7 +101,7 @@ class TransactionController {
 
   async deleteTransaction(req, res) {
     try {
-      await UserService.delete(req.params.transactionId);
+      await TransactionService.delete(req.params.transactionId);
       res.status(200).send({
         error: false,
         message: "İşlem başarıyla silindi!",

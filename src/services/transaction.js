@@ -22,6 +22,16 @@ class TransactionService {
       return result;
     }
 
+    async readUserTransactions(userId) {
+      const result = await db.query(
+        `SELECT 
+        id, first_product_id, second_product_id 
+        FROM transactions WHERE user_id='${userId}'`
+      );
+
+      return result;
+    }
+
     async update(id, data) {
       const queries = [];
 
@@ -40,7 +50,7 @@ class TransactionService {
 
       const result = await db.query(
         `UPDATE 
-        transaction
+        transactions
         SET
         ${queries.join(',')}
         WHERE id='${id}'`
@@ -51,7 +61,7 @@ class TransactionService {
 
     async delete(id) {
       const result = await db.query(
-        `DELETE FROM transaction
+        `DELETE FROM transactions
         WHERE id='${id}'`
       );
     
