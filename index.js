@@ -12,6 +12,8 @@ app.use(express.urlencoded({extended: true}));
 // ROUTES
 const userRoutes = require("./src/routes/user");
 const authRoutes = require("./src/routes/auth");
+const productRoutes = require("./src/routes/product");
+const transactionRoutes = require("./src/routes/transaction");
 
 const corsOptions = {
   credentials: true,
@@ -38,74 +40,12 @@ app.use(cors(corsOptions));
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 
-// INVENTORY
-app.get(
-  "/inventory",
-  function (request, response) {
-    response.status(200).send({
-      error: false,
-      message:
-        "Uygulamadaki tüm itemleri getirecek",
-      data: request.body,
-    });
-  }
-);
+// PRODUCT
+app.use("/api/products", productRoutes);
 
-app.get(
-  "/inventory/:userId",
-  function (request, response) {
-    response.status(200).send({
-      error: false,
-      message:
-        "Kullanıcının tüm envanterini getirmek için kullanacağız",
-      data: request.body,
-    });
-  }
-);
+// TRANSACTION
+app.use("/api/transactions", transactionRoutes);
 
-app.post(
-  "/inventory/:userId",
-  function (request, response) {
-    response.status(200).send({
-      error: false,
-      message:
-        "Yeni item eklemek için kullanılacak",
-      data: request.body,
-    });
-  }
-);
-
-app.put(
-  "/inventory/:itemId/update",
-  function (request, response) {
-    response.status(200).send({
-      error: false,
-      message:
-        "Envanterdeki itemi güncellemek için kullanılacak",
-      data: request.body,
-    });
-  }
-);
-
-app.delete(
-  "/inventory/:itemId/delete",
-  function (request, response) {
-    response.status(200).send({
-      error: false,
-      message:
-        "Envanterden item silmek için kullanacağız",
-      data: request.body,
-    });
-  }
-);
-
-// ERROR HANDLING
-// app.use((err, req, res, next) => {
-//   const statusCode = err.statusCode || 500;
-//   console.error(err.message, err.stack);
-//   res.status(statusCode).json({ message: err.message });
-//   next();
-// });
 app.use((req, res, next) => {
   res.status(404).send({error: true, message: 'Route bulunamadı!', result: null})
   next();
