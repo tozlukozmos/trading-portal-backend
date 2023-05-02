@@ -7,6 +7,7 @@ router.get('/', UserController.readUsers);
 router.get('/:userId', UserController.readUser);
 router.get('/:userId/products', ProductController.readUserProducts);
 router.get('/:userId/transactions', TransactionController.readUserTransactions);
+router.get('/:userId/favorites', ProductController.readUserFavoriteProducts);
 router.put('/:userId/update', UserController.updateUser);
 router.delete('/:userId/delete', UserController.deleteUser);
 

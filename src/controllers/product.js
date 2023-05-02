@@ -77,6 +77,23 @@ class ProductController {
     }
   }
 
+  async readUserFavoriteProducts(req, res) {
+    try {
+      const result = await ProductService.readUserFavoriteProducts(req.params.userId);
+      res.status(200).send({
+        error: false,
+        message: "Kullanıcının beğendiği ürünler başarıyla getirildi!",
+        result: result,
+      });
+    } catch (error) {
+      res.status(500).send({
+        error: true,
+        message: "Kullanıcının beğendiği ürünler getirilirken bir hata oluştu!",
+        result: error.sqlMessage,
+      });
+    }
+  }
+
   async updateProduct(req, res) {
     try {
       await ProductService.update(req.params.productId, req.body);

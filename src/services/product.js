@@ -79,6 +79,25 @@ class ProductService {
     return result;
   }
 
+  async readUserFavoriteProducts(userId) {
+    const result = await db.query(
+        `SELECT 
+          JSON_OBJECT(
+              'id', p.id,
+              'title', p.title,
+              'description', p.description,
+              'created_at', p.created_at,
+              'updated_at', p.updated_at
+          ) AS product,
+          f.created_at,
+          f.updated_at
+          FROM favorites f
+          JOIN products p ON f.product_id = p.id
+          WHERE f.user_id = '${userId}'`
+    );
+    return result;
+  }
+
   async update(id, data) {
     const queries = [];
 
