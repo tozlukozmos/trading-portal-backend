@@ -1,19 +1,53 @@
-const express = require("express");
-const helmet = require("helmet");
-const cors = require("cors");
+import express, { json, urlencoded } from 'express';
+import { serve, setup } from 'swagger-ui-express';
+import swaggerJSDoc from 'swagger-jsdoc';
+import helmet from "helmet";
+import cors from "cors";
 
 require("dotenv").config();
 
 var app = express();
-app.use(express.json());
+app.use(json());
 app.use(helmet());
-app.use(express.urlencoded({extended: true}));
+app.use(urlencoded({extended: true}));
+
+
+
+// SWAGGER
+
+const swaggerDefinition = {
+  openapi: '3.0.0',
+  info: {
+    title: 'API Title',
+    version: '1.0.0',
+    description: 'API Description',
+  },
+  servers: [
+    {
+      url: 'http://localhost:3000',
+      description: 'Development server',
+    },
+  ],
+};
+
+const options = {
+  swaggerDefinition,
+  apis: ['./src/routes/*.js'], 
+};
+const swaggerSpec = swaggerJSDoc(options);
+
+app.use('/api-docs', serve, setup(swaggerSpec));
+
+
+
+
+
 
 // ROUTES
-const userRoutes = require("./src/routes/user");
-const authRoutes = require("./src/routes/auth");
-const productRoutes = require("./src/routes/product");
-const transactionRoutes = require("./src/routes/transaction");
+import userRoutes from "./src/routes/user";
+import authRoutes from "./src/routes/auth";
+import productRoutes from "./src/routes/product";
+import transactionRoutes from "./src/routes/transaction";
 
 const corsOptions = {
   credentials: true,
