@@ -4,7 +4,7 @@ const ProductController = require('../controllers/product');
 router.post('/',ProductController.createProduct);
 router.get('/', ProductController.readProducts);
 router.get('/:productId', ProductController.readProduct);
-// router.get('/:userId', ProductController.readUserProducts);
+router.post('/:productId/create-offer', ProductController.createProductOffer);
 router.put('/:productId/update', ProductController.updateProduct);
 router.post('/:productId/like', ProductController.likeProduct);
 router.delete('/:productId/unlike', ProductController.unlikeProduct);
