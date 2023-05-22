@@ -60,6 +60,60 @@ class ProductController {
     }
   }
 
+  async readUserOffers(req, res) {
+    try {
+      const result = await ProductService.readUserOffers(req.params.userId);
+      res.status(200).send({
+        error: false,
+        message: "Teklifleriniz başarıyla getirildi!",
+        result: result,
+      });
+    } catch (error) {
+      res.status(500).send({
+        error: true,
+        message: "Teklifleriniz getirilirken bir hata oluştu!",
+        result: error.sqlMessage,
+      });
+    }
+  }
+
+  async createProductOffer(req, res) {
+    try {
+      await ProductService.createProductOffer(req.params.productId, req.body.productIds);
+      res.status(200).send({
+        error: false,
+        message: "Ürüne başarıyla teklif yapıldı!",
+        result: null,
+      });
+    } catch (error) {
+      res.status(500).send({
+        error: true,
+        message: "Ürüne teklif yapılırken bir hata oluştu!",
+        result: error.sqlMessage,
+      });
+    }
+  }
+
+  async replyToOffer(req, res) {
+    try {
+      await ProductService.replyToOffer(req.body.offeringProductId, req.body.offeredProductIds, req.body.status);
+      if(req.body.status === 'accepted'){
+        await ProductService.swapUserIds(req.body.offeringProductId, req.body.offeredProductIds);
+      }
+      res.status(200).send({
+        error: false,
+        message: "Teklife başarıyla cevap verdiniz!",
+        result: null,
+      });
+    } catch (error) {
+      res.status(500).send({
+        error: true,
+        message: "Teklife cevap verilirken bir hata oluştu!",
+        result: error.sqlMessage,
+      });
+    }
+  }
+
   async readUserProducts(req, res) {
     try {
       const result = await ProductService.readUserProducts(req.params.userId);
@@ -72,6 +126,23 @@ class ProductController {
       res.status(500).send({
         error: true,
         message: "Kullanıcının ürünleri getirilirken bir hata oluştu!",
+        result: error.sqlMessage,
+      });
+    }
+  }
+
+  async readUserFavoriteProducts(req, res) {
+    try {
+      const result = await ProductService.readUserFavoriteProducts(req.params.userId);
+      res.status(200).send({
+        error: false,
+        message: "Kullanıcının beğendiği ürünler başarıyla getirildi!",
+        result: result,
+      });
+    } catch (error) {
+      res.status(500).send({
+        error: true,
+        message: "Kullanıcının beğendiği ürünler getirilirken bir hata oluştu!",
         result: error.sqlMessage,
       });
     }
