@@ -1,106 +1,103 @@
 {
-    "swagger": "2.0",
-    "info": {
-      "version": "1.0.0",
-      "title": "API Title",
-      "description": "API Description"
-    },
-    "host": "localhost:3000",
-    "basePath": "/",
-    "schemes": [
-      "http"
-    ],
-    "tags": [
-      {
-        "name": "API",
-        "description": "API for Users"
-      }
-    ],
-    "consumes": [
-      "application/json"
-    ],
-    "produces": [
-      "application/json"
-    ],
-    "paths": {
-      "/api/users": {
-        "get": {
-          "tags": [
-            "Users"
-          ],
-          "summary": "Get all users",
-          "responses": {
-            "200": {
-              "description": "OK"
-            }
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "API Title",
+    "description": "API Description"
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "tags": [
+    {
+      "name": "API",
+      "description": "API for Users"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/users": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get all users",
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       },
-      "/api/users/{userId}": {
-        "get": {
-          "tags": [
-            "Users"
-          ],
-          "summary": "Get a user by ID",
-          "parameters": [
-            {
-              "name": "userId",
-              "in": "path",
-              "required": true,
-              "type": "string",
-              "description": "ID of the user"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK"
-            }
-          }
-        }
-      },
-      "/api/users": {
-        "post": {
-          "tags": [
-            "Users"
-          ],
-          "summary": "Create a new user",
-          "parameters": [
-            {
-              "name": "user",
-              "in": "body",
-              "required": true,
-              "schema": {
-                "$ref": "#/definitions/User"
-              },
-              "description": "New user object"
-            }
-          ],
-          "responses": {
-            "201": {
-              "description": "Created"
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Create a new user",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
             },
-            "400": {
-              "description": "Bad Request"
-            }
+            "description": "New user object"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
           }
         }
       }
     },
-    "definitions": {
-      "User": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "email": {
-            "type": "string"
-          },
-          "password": {
-            "type": "string"
+    "/api/users/{userId}": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get a user by ID",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID of the user"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }
     }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    }
   }
-  
+}

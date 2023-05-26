@@ -1,6 +1,7 @@
 {
   "name": "trading-portal-backend",
   "version": "1.0.0",
+  "type": "commonjs",
   "description": "COMP202 and COMP204 term project",
   "main": "index.js",
   "scripts": {
