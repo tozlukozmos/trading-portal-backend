@@ -1,3 +1,30 @@
+/**
+ * @swagger
+ * /transactions:
+ *   get:
+ *     description: İşlemleri listeler.
+ *     responses:
+ *       200:
+ *         description: Başarılı yanıt.
+ */
+
+/**
+ * @swagger
+ * /transactions/{id}:
+ *   get:
+ *     description: Belirli bir işlemi getirir.
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         description: İşlem ID'si.
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Başarılı yanıt.
+ */
+
 const router = require('express').Router();
 const TransactionController = require('../controllers/transaction');
 

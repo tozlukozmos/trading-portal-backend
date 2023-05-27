@@ -4,8 +4,8 @@ const { serve, setup } = require('swagger-ui-express');
 const swaggerJSDoc = require('swagger-jsdoc');
 const helmet = require('helmet');
 const cors = require('cors');
-
 const dotenv = require('dotenv');
+
 dotenv.config();
 
 // ROUTES
@@ -20,50 +20,27 @@ app.use(helmet());
 app.use(urlencoded({ extended: true }));
 
 // SWAGGER
-
-const swaggerDefinition = {
-  openapi: '3.0.0',
-  info: {
-    title: 'API Title',
-    version: '1.0.0',
-    description: 'API Description',
-  },
-  servers: [
-    {
-      url: 'http://localhost:3000',
-      description: 'Development server',
+const swaggerOptions = {
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'API Title',
+      version: '1.0.0',
+      description: 'API Description',
     },
-  ],
-};
-
-const options = {
-  swaggerDefinition,
+    servers: [
+      {
+        url: 'http://localhost:3000',
+        description: 'Development server',
+      },
+    ],
+  },
   apis: ['./src/routes/*.js'],
 };
-const swaggerSpec = swaggerJSDoc(options);
+
+const swaggerSpec = swaggerJSDoc(swaggerOptions);
 
 app.use('/api-docs', serve, setup(swaggerSpec));
-
-const corsOptions = {
-  credentials: true,
-  origin: [
-    'http://localhost:3000',
-    'http://192.168.2.112:3000',
-  ],
-  allowedHeaders: [
-    'Content-Type',
-    'Authorization',
-    'Access-Control-Allow-Origin',
-  ],
-  exposedHeaders: [
-    'Content-Range',
-    'X-Content-Range',
-  ],
-  maxAge: 600,
-  preflightContinue: false,
-};
-
-app.use(cors(corsOptions));
 
 // USER
 app.use('/api/auth', authRoutes);
@@ -82,6 +59,6 @@ app.use((req, res, next) => {
 
 const port = process.env.PORT || 3000;
 
-app.listen(port, function () {
-  console.log('Started application on port %d', port);
+app.listen(port, () => {
+  console.log(`Uygulama http://localhost:${port} üzerinde çalışıyor.`);
 });

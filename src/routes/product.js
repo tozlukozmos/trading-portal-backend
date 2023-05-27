@@ -1,3 +1,30 @@
+/**
+ * @swagger
+ * /products:
+ *   get:
+ *     description: Ürünleri listeler.
+ *     responses:
+ *       200:
+ *         description: Başarılı yanıt.
+ */
+
+/**
+ * @swagger
+ * /products/{id}:
+ *   get:
+ *     description: Belirli bir ürünü getirir.
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         description: Ürün ID'si.
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Başarılı yanıt.
+ */
+
 const router = require('express').Router();
 const ProductController = require('../controllers/product');
 

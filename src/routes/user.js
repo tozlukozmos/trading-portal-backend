@@ -1,3 +1,30 @@
+/**
+ * @swagger
+ * /users:
+ *   get:
+ *     description: Kullanıcıları listeler.
+ *     responses:
+ *       200:
+ *         description: Başarılı yanıt.
+ */
+
+/**
+ * @swagger
+ * /users/{id}:
+ *   get:
+ *     description: Belirli bir kullanıcıyı getirir.
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         description: Kullanıcı ID'si.
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Başarılı yanıt.
+ */
+
 const router = require('express').Router();
 const UserController = require('../controllers/user');
 const ProductController = require('../controllers/product');
