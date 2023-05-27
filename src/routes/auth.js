@@ -1,22 +1,49 @@
 /**
  * @swagger
- * /auth/login:
+ * tags:
+ *   name: Auth
+ *   description: User authorization processes
+ * 
+ * /api/auth/register:
  *   post:
- *     description: Kullanıcı girişi yapar.
+ *     summary: Creates a new user record.
+ *     parameters:
+ *       - name: user
+ *         description: Yeni kullanıcı bilgileri
+ *         in: body
+ *         required: true
+ *         schema:
+ *           $ref: '#/definitions/User'
+ *     responses:
+ *       201:
+ *         description: Kullanıcı kaydı başarıyla oluşturuldu
+ * 
+ * /api/auth/login:
+ *   post:
+ *     summary: The user logs in.
+ *     parameters:
+ *       - name: credentials
+ *         description: Kullanıcı giriş bilgileri
+ *         in: body
+ *         required: true
+ *         schema:
+ *           type: object
+ *           properties:
+ *             email:
+ *               type: string
+ *             password:
+ *               type: string
+ *               format: password
  *     responses:
  *       200:
- *         description: Başarılı giriş.
+ *         description: Kullanıcı girişi başarılı, token alındı
+ *         schema:
+ *           type: object
+ *           properties:
+ *             token:
+ *               type: string
  */
 
-/**
- * @swagger
- * /auth/logout:
- *   post:
- *     description: Kullanıcı çıkışı yapar.
- *     responses:
- *       200:
- *         description: Başarılı çıkış.
- */
 
 const express = require('express');
 const router = express.Router();
