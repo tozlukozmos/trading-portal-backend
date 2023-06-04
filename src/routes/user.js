@@ -4,6 +4,18 @@
  *   name: User
  *   description: User operations
  * 
+ * definitions:
+ *   User:
+ *     type: object
+ *     properties:
+ *       id:
+ *         type: string
+ *       name:
+ *         type: string
+ *       email:
+ *         type: string
+ *     
+ * 
  * /api/user:
  *   get:
  *     summary: Brings all users.

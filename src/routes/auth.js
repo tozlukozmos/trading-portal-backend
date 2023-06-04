@@ -4,6 +4,14 @@
  *   name: Auth
  *   description: User authorization processes
  * 
+ * definitions:
+ *   User:
+ *     type: object
+ *     properties:
+ *       id:
+ *         type: string
+ *      
+ * 
  * /api/auth/register:
  *   post:
  *     summary: Creates a new user record.

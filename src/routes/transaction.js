@@ -4,6 +4,13 @@
  *   name: Transaction
  *   description: Transactions
  * 
+ * definitions:
+ *   Transaction:
+ *     type: object
+ *     properties:
+ *       id:
+ *         type: string
+ *      
  * /api/transaction:
  *   post:
  *     summary: Creates a new transaction.
@@ -76,6 +83,7 @@
  *       204:
  *         description: İşlem başarıyla silindi
  */
+
 
 const router = require('express').Router();
 const TransactionController = require('../controllers/transaction');

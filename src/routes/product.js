@@ -4,6 +4,28 @@
  *   name: Product
  *   description: Product operations
  * 
+ * definitions:
+ *   Product:
+ *     type: object
+ *     properties:
+ *       id:
+ *         type: string
+ *   
+ * 
+ *   Offer:
+ *     type: object
+ *     properties:
+ *       id:
+ *         type: string
+ *      
+ * 
+ *   Comment:
+ *     type: object
+ *     properties:
+ *       id:
+ *         type: string
+ *      
+ * 
  * /api/product:
  *   post:
  *     summary: Creates a new product.
@@ -158,6 +180,7 @@
  *       204:
  *         description: Yorum başarıyla silindi
  */
+
 
 const router = require('express').Router();
 const ProductController = require('../controllers/product');
