@@ -77,6 +77,23 @@ class ProductController {
     }
   }
 
+  async readUserOfferHistory(req, res) {
+    try {
+      const result = await ProductService.readUserOfferHistory(req.params.userId);
+      res.status(200).send({
+        error: false,
+        message: "Teklif geçmişiniz başarıyla getirildi!",
+        result: result,
+      });
+    } catch (error) {
+      res.status(500).send({
+        error: true,
+        message: "Teklif geçmişiniz getirilirken bir hata oluştu!",
+        result: error.sqlMessage,
+      });
+    }
+  }
+
   async createProductOffer(req, res) {
     try {
       await ProductService.createProductOffer(req.params.productId, req.body.productIds);
@@ -98,7 +115,8 @@ class ProductController {
     try {
       await ProductService.replyToOffer(req.body.offeringProductId, req.body.offeredProductIds, req.body.status);
       if(req.body.status === 'accepted'){
-        await ProductService.swapUserIds(req.body.offeringProductId, req.body.offeredProductIds);
+        // await ProductService.swapUserIds(req.body.offeringProductId, req.body.offeredProductIds);
+        await ProductService.updateSwappedProductStatus(req.body.offeringProductId, req.body.offeredProductIds);
       }
       res.status(200).send({
         error: false,
