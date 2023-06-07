@@ -4,9 +4,9 @@ class ProductService {
   async create(data) {
     const result = await db.query(
       `INSERT INTO products 
-        (title, description, image, user_id) 
+        (title, description, image, status, user_id) 
         VALUES 
-        ('${data.title}', '${data.description}', '${data.image}', '${data.userId}')`
+        ('${data.title}', '${data.description}', '${data.image}', 'active', '${data.userId}')`
     );
     return result.info;
   }
@@ -64,6 +64,49 @@ class ProductService {
       users AS u ON p2.user_id = u.id
     WHERE
       p1.user_id = '${userId}' AND po.status = 'pending'
+    GROUP BY
+      p1.id, p1.title, p1.description, p1.image, p1.created_at, p1.updated_at, u.id, u.first_name, u.last_name;`
+    );
+
+    return result;
+  }
+
+  async readUserOfferHistory(userId) {
+    const result = await db.query(
+      `SELECT
+      p1.id AS product_id,
+      p1.title,
+      p1.description,
+      p1.image,
+      p1.created_at,
+      p1.updated_at,
+      JSON_OBJECT(
+        'id', u.id,
+        'firstName', u.first_name,
+        'lastName', u.last_name,
+        'email', u.email,
+        'phoneNumber', u.phone_number
+      ) AS user,
+      JSON_ARRAYAGG(
+        JSON_OBJECT(
+          'id', p2.id,
+          'image', p2.image,
+          'title', p2.title,
+          'created_at', p2.created_at,
+          'updated_at', p2.updated_at,
+          'description', p2.description
+        )
+      ) AS offered_products
+    FROM
+      products AS p1
+    JOIN
+      product_offers AS po ON po.offering_product_id = p1.id
+    JOIN
+      products AS p2 ON po.offered_product_id = p2.id
+    JOIN
+      users AS u ON p2.user_id = u.id
+    WHERE
+      p1.user_id = '${userId}' AND po.status = 'accepted'
     GROUP BY
       p1.id, p1.title, p1.description, p1.image, p1.created_at, p1.updated_at, u.id, u.first_name, u.last_name;`
     );
@@ -203,6 +246,8 @@ class ProductService {
       favorites f ON p.id = f.product_id
   LEFT JOIN
       users uf ON f.user_id = uf.id
+  WHERE
+    p.status = 'active'
   GROUP BY
       p.id, u.id, u.first_name, u.last_name, u.email, u.phone_number;`
     );
@@ -323,6 +368,11 @@ class ProductService {
             `user_id='${data.userId}'`
           );
           break;
+        case "status":
+          queries.push(
+            `status='${data.status}'`
+          );
+          break;
         default:
           break;
       }
@@ -354,31 +404,41 @@ class ProductService {
     return result;
   }
 
-  async swapUserIds(offeringProductId, offeredProductIds) {
-    const offeringProductQuery = `
-      SELECT user_id
-      FROM products
-      WHERE id = ${offeringProductId}
-    `;
-    const offeringProductResult = await db.query(offeringProductQuery);
-    const offeringProductUserId = offeringProductResult[0].user_id;
+  // async swapUserIds(offeringProductId, offeredProductIds) {
+  //   const offeringProductQuery = `
+  //     SELECT user_id
+  //     FROM products
+  //     WHERE id = ${offeringProductId}
+  //   `;
+  //   const offeringProductResult = await db.query(offeringProductQuery);
+  //   const offeringProductUserId = offeringProductResult[0].user_id;
 
-    const offeredProductQuery = `
-      SELECT user_id
-      FROM products
-      WHERE id = ${offeredProductIds[0]}
-    `;
-    const offeredProductResult = await db.query(offeredProductQuery);
-    const offeredProductUserId = offeredProductResult[0].user_id;
+  //   const offeredProductQuery = `
+  //     SELECT user_id
+  //     FROM products
+  //     WHERE id = ${offeredProductIds[0]}
+  //   `;
+  //   const offeredProductResult = await db.query(offeredProductQuery);
+  //   const offeredProductUserId = offeredProductResult[0].user_id;
 
-    await this.update(offeringProductId, {userId: offeredProductUserId})
+  //   await this.update(offeringProductId, {userId: offeredProductUserId})
+
+  //   offeredProductIds.forEach(async id => {
+  //     await this.update(id, {userId: offeringProductUserId})
+  //   });
+    
+  //   return {};
+  // }  
+  
+  async updateSwappedProductStatus(offeringProductId, offeredProductIds) {
+    await this.update(offeringProductId, {status: 'inactive'})
 
     offeredProductIds.forEach(async id => {
-      await this.update(id, {userId: offeringProductUserId})
+      await this.update(id, {status: 'inactive'})
     });
     
     return {};
-  }    
+  } 
 
   async like(productId, userId) {
     const result = await db.query(

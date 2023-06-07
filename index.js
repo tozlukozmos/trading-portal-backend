@@ -1,58 +1,64 @@
-const express = require("express");
-const helmet = require("helmet");
-const cors = require("cors");
+const express = require('express');
+const { json, urlencoded } = require('express');
+const { serve, setup } = require('swagger-ui-express');
+const swaggerJSDoc = require('swagger-jsdoc');
+const helmet = require('helmet');
+const cors = require('cors');
+const dotenv = require('dotenv');
 
-require("dotenv").config();
-
-var app = express();
-app.use(express.json());
-app.use(helmet());
-app.use(express.urlencoded({extended: true}));
+dotenv.config();
 
 // ROUTES
-const userRoutes = require("./src/routes/user");
-const authRoutes = require("./src/routes/auth");
-const productRoutes = require("./src/routes/product");
-const transactionRoutes = require("./src/routes/transaction");
+const userRoutes = require('./src/routes/user');
+const authRoutes = require('./src/routes/auth');
+const productRoutes = require('./src/routes/product');
+const transactionRoutes = require('./src/routes/transaction');
 
-const corsOptions = {
-  credentials: true,
-  origin: [
-    "http://localhost:3000",
-    "http://192.168.2.112:3000",
-  ],
-  allowedHeaders: [
-    "Content-Type",
-    "Authorization",
-    "Access-Control-Allow-Origin",
-  ],
-  exposedHeaders: [
-    "Content-Range",
-    "X-Content-Range",
-  ],
-  maxAge: 600,
-  preflightContinue: false,
+const app = express();
+app.use(json());
+app.use(helmet());
+app.use(urlencoded({ extended: true }));
+
+// SWAGGER
+const swaggerOptions = {
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'API Title',
+      version: '1.0.0',
+      description: 'API Description',
+    },
+    servers: [
+      {
+        url: 'http://localhost:3000',
+        description: 'Development server',
+      },
+    ],
+  },
+  apis: ['./src/routes/*.js'],
 };
 
-app.use(cors(corsOptions));
+const swaggerSpec = swaggerJSDoc(swaggerOptions);
+
+app.use('/api-docs', serve, setup(swaggerSpec));
 
 // USER
-app.use("/api/auth", authRoutes);
-app.use("/api/users", userRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
 
 // PRODUCT
-app.use("/api/products", productRoutes);
+app.use('/api/products', productRoutes);
 
 // TRANSACTION
-app.use("/api/transactions", transactionRoutes);
+app.use('/api/transactions', transactionRoutes);
 
 app.use((req, res, next) => {
-  res.status(404).send({error: true, message: 'Route bulunamadı!', result: null})
+  res.status(404).send({ error: true, message: 'Route bulunamadı!', result: null });
   next();
-})
+});
 
 const port = process.env.PORT || 3000;
 
-app.listen(port, function () {
-  console.log("Started application on port %d", port);
+app.listen(port, () => {
+  console.log(`Uygulama http://localhost:${port} üzerinde çalışıyor.`);
 });
