@@ -1,8 +1,8 @@
 /**
  * @swagger
  * tags:
- *   name: User
- *   description: User operations
+ *   - name: User
+ *     description: User operations
  * 
  * definitions:
  *   User:
@@ -14,14 +14,15 @@
  *         type: string
  *       email:
  *         type: string
- *     
  * 
  * /api/user:
  *   get:
+ *     tags:
+ *       - User
  *     summary: Brings all users.
  *     responses:
  *       200:
- *         description: Başarılı yanıt
+ *         description: Successful response
  *         schema:
  *           type: object
  *           properties:
@@ -31,75 +32,89 @@
  *                 $ref: '#/definitions/User'
  * 
  *   post:
+ *     tags:
+ *       - User
  *     summary: Creates a new user.
- *     parameters:
- *       - name: user
- *         description: Yeni kullanıcı verileri
- *         in: body
- *         required: true
- *         schema:
- *           $ref: '#/definitions/User'
+ *     requestBody:
+ *       description: New user data
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/definitions/User'
  *     responses:
  *       201:
- *         description: Kullanıcı başarıyla oluşturuldu
+ *         description: User created successfully
  * 
  * /api/user/{userId}:
  *   get:
+ *     tags:
+ *       - User
  *     summary: Returns a specific user.
  *     parameters:
  *       - name: userId
- *         description: Kullanıcı kimliği
+ *         description: User ID
  *         in: path
  *         required: true
- *         type: string
+ *         schema:
+ *           type: string
  *     responses:
  *       200:
- *         description: Başarılı yanıt
+ *         description: Successful response
  *         schema:
  *           $ref: '#/definitions/User'
  * 
  *   put:
+ *     tags:
+ *       - User
  *     summary: Updates a specific user.
  *     parameters:
  *       - name: userId
- *         description: Kullanıcı kimliği
+ *         description: User ID
  *         in: path
  *         required: true
- *         type: string
+ *         schema:
+ *           type: string
  *       - name: user
- *         description: Güncellenen kullanıcı verileri
+ *         description: Updated user data
  *         in: body
  *         required: true
  *         schema:
  *           $ref: '#/definitions/User'
  *     responses:
  *       200:
- *         description: Kullanıcı başarıyla güncellendi
+ *         description: User updated successfully
  * 
  *   delete:
+ *     tags:
+ *       - User
  *     summary: Deletes a specific user.
  *     parameters:
  *       - name: userId
- *         description: Kullanıcı kimliği
+ *         description: User ID
  *         in: path
  *         required: true
- *         type: string
+ *         schema:
+ *           type: string
  *     responses:
  *       204:
- *         description: Kullanıcı başarıyla silindi
+ *         description: User deleted successfully
  * 
  * /api/user/{userId}/products:
  *   get:
+ *     tags:
+ *       - User
  *     summary: Returns products for a specific user.
  *     parameters:
  *       - name: userId
- *         description: Kullanıcı kimliği
+ *         description: User ID
  *         in: path
  *         required: true
- *         type: string
+ *         schema:
+ *           type: string
  *     responses:
  *       200:
- *         description: Başarılı yanıt
+ *         description: Successful response
  *         schema:
  *           type: object
  *           properties:
@@ -110,16 +125,19 @@
  * 
  * /api/user/{userId}/transactions:
  *   get:
+ *     tags:
+ *       - User
  *     summary: Retrieves the actions of a particular user.
  *     parameters:
  *       - name: userId
- *         description: Kullanıcı kimliği
+ *         description: User ID
  *         in: path
  *         required: true
- *         type: string
+ *         schema:
+ *           type: string
  *     responses:
  *       200:
- *         description: Başarılı yanıt
+ *         description: Successful response
  *         schema:
  *           type: object
  *           properties:
@@ -130,16 +148,19 @@
  * 
  * /api/user/{userId}/offers:
  *   get:
+ *     tags:
+ *       - User
  *     summary: Returns offers from a specific user.
  *     parameters:
  *       - name: userId
- *         description: Kullanıcı kimliği
+ *         description: User ID
  *         in: path
  *         required: true
- *         type: string
+ *         schema:
+ *           type: string
  *     responses:
  *       200:
- *         description: Başarılı yanıt
+ *         description: Successful response
  *         schema:
  *           type: object
  *           properties:
@@ -150,43 +171,74 @@
  * 
  * /api/user/{userId}/offers/reply-to-offer:
  *   post:
+ *     tags:
+ *       - User
  *     summary: Responds to an offer.
  *     parameters:
  *       - name: userId
- *         description: Kullanıcı kimliği
+ *         description: User ID
  *         in: path
  *         required: true
- *         type: string
+ *         schema:
+ *           type: string
  *       - name: offerId
- *         description: Teklif kimliği
+ *         description: Offer ID
  *         in: query
  *         required: true
- *         type: string
+ *         schema:
+ *           type: string
  *       - name: response
- *         description: Cevap (kabul, reddet vb.)
+ *         description: Response (accept, reject, etc.)
  *         in: query
  *         required: true
- *         type: string
+ *         schema:
+ *           type: string
  *     responses:
  *       200:
- *         description: Cevap başarıyla gönderildi
+ *         description: Response sent successfully
  * 
  * /api/user/{userId}/favorites:
  *   get:
+ *     tags:
+ *       - User
  *     summary: Brings a particular user's favorite products.
  *     parameters:
  *       - name: userId
- *         description: Kullanıcı kimliği
+ *         description: User ID
  *         in: path
  *         required: true
- *         type: string
+ *         schema:
+ *           type: string
  *     responses:
  *       200:
- *         description: Başarılı yanıt
+ *         description: Successful response
  *         schema:
  *           type: object
  *           properties:
  *             products:
+ *               type: array
+ *               items:
+ *                 $ref: '#/definitions/Product'
+ *             $ref: '#/definitions/Product'
+ * 
+ * /api/user/{userId}/offers/history:
+ *   get:
+ *     tags:
+ *       - User
+ *     summary: Returns offer history of a specific user.
+ *     parameters:
+ *       - name: userId
+ *         description: User ID
+ *         in: path
+ *         required: true
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Successful response
+ *         schema:
+ *           type: object
+ *           properties:
+ *             offers:
  *               type: array
  *               items:
  *                 $ref: '#/definitions/Product'

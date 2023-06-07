@@ -1,8 +1,8 @@
 /**
  * @swagger
  * tags:
- *   name: Auth
- *   description: User authorization processes
+ *   - name: Auth
+ *     description: User authorization processes
  * 
  * definitions:
  *   User:
@@ -14,43 +14,48 @@
  * 
  * /api/auth/register:
  *   post:
+ *     tags:
+ *       - Auth
  *     summary: Creates a new user record.
- *     parameters:
- *       - name: user
- *         description: Yeni kullanıcı bilgileri
- *         in: body
- *         required: true
- *         schema:
- *           $ref: '#/definitions/User'
+ *     requestBody:
+ *       description: New user data
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/definitions/User'
  *     responses:
  *       201:
- *         description: Kullanıcı kaydı başarıyla oluşturuldu
+ *         description: User registration successful
  * 
  * /api/auth/login:
  *   post:
+ *     tags:
+ *       - Auth
  *     summary: The user logs in.
- *     parameters:
- *       - name: credentials
- *         description: Kullanıcı giriş bilgileri
- *         in: body
- *         required: true
- *         schema:
- *           type: object
- *           properties:
- *             email:
- *               type: string
- *             password:
- *               type: string
- *               format: password
+ *     requestBody:
+ *       description: User login credentials
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *                 format: password
  *     responses:
  *       200:
- *         description: Kullanıcı girişi başarılı, token alındı
+ *         description: User login successful, token received
  *         schema:
  *           type: object
  *           properties:
  *             token:
  *               type: string
  */
+
 
 
 const express = require('express');

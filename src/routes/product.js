@@ -1,8 +1,8 @@
 /**
  * @swagger
  * tags:
- *   name: Product
- *   description: Product operations
+ *   - name: Product
+ *     description: Product operations
  * 
  * definitions:
  *   Product:
@@ -28,23 +28,27 @@
  * 
  * /api/product:
  *   post:
+ *     tags:
+ *       - Product
  *     summary: Creates a new product.
- *     parameters:
- *       - name: product
- *         description: Yeni ürün verileri
- *         in: body
- *         required: true
- *         schema:
- *           $ref: '#/definitions/Product'
+ *     requestBody:
+ *       description: New product data
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/definitions/Product'
  *     responses:
  *       201:
- *         description: Ürün başarıyla oluşturuldu
+ *         description: Product created successfully
  * 
  *   get:
- *     summary: It brings all the products.
+ *     tags:
+ *       - Product
+ *     summary: Returns all products.
  *     responses:
  *       200:
- *         description: Başarılı yanıt
+ *         description: Successful response
  *         schema:
  *           type: object
  *           properties:
@@ -55,137 +59,163 @@
  * 
  * /api/product/{productId}:
  *   get:
- *     summary: Returns a specific product.
+ *     tags:
+ *       - Product
+ *     summary: Get a specific product.
  *     parameters:
  *       - name: productId
- *         description: Ürün kimliği
+ *         description: Product ID
  *         in: path
  *         required: true
- *         type: string
+ *         schema:
+ *           type: string
  *     responses:
  *       200:
- *         description: Başarılı yanıt
+ *         description: Successful response
  *         schema:
  *           $ref: '#/definitions/Product'
  * 
  *   put:
+ *     tags:
+ *       - Product
  *     summary: Updates a specific product.
  *     parameters:
  *       - name: productId
- *         description: Ürün kimliği
+ *         description: Product ID
  *         in: path
  *         required: true
- *         type: string
+ *         schema:
+ *           type: string
  *       - name: product
- *         description: Güncellenen ürün verileri
+ *         description: Updated product data
  *         in: body
  *         required: true
  *         schema:
  *           $ref: '#/definitions/Product'
  *     responses:
  *       200:
- *         description: Ürün başarıyla güncellendi
+ *         description: Product updated successfully
  * 
  *   delete:
+ *     tags:
+ *       - Product
  *     summary: Deletes a specific product.
  *     parameters:
  *       - name: productId
- *         description: Ürün kimliği
+ *         description: Product ID
  *         in: path
  *         required: true
- *         type: string
+ *         schema:
+ *           type: string
  *     responses:
  *       204:
- *         description: Ürün başarıyla silindi
+ *         description: Product deleted successfully
  * 
  * /api/product/{productId}/create-offer:
  *   post:
+ *     tags:
+ *       - Product
  *     summary: Creates an offer for a product.
  *     parameters:
  *       - name: productId
- *         description: Ürün kimliği
+ *         description: Product ID
  *         in: path
  *         required: true
- *         type: string
+ *         schema:
+ *           type: string
  *       - name: offer
- *         description: Yeni teklif verileri
+ *         description: New offer data
  *         in: body
  *         required: true
  *         schema:
  *           $ref: '#/definitions/Offer'
  *     responses:
  *       201:
- *         description: Teklif başarıyla oluşturuldu
+ *         description: Offer created successfully
  * 
  * /api/product/{productId}/like:
  *   post:
+ *     tags:
+ *       - Product
  *     summary: Likes a product.
  *     parameters:
  *       - name: productId
- *         description: Ürün kimliği
+ *         description: Product ID
  *         in: path
  *         required: true
- *         type: string
+ *         schema:
+ *           type: string
  *     responses:
  *       200:
- *         description: Ürün başarıyla beğenildi
+ *         description: Product liked successfully
  * 
  * /api/product/{productId}/unlike:
  *   delete:
+ *     tags:
+ *       - Product
  *     summary: Removes the likes of a product.
  *     parameters:
  *       - name: productId
- *         description: Ürün kimliği
+ *         description: Product ID
  *         in: path
  *         required: true
- *         type: string
+ *         schema:
+ *           type: string
  *     responses:
  *       204:
- *         description: Ürün beğenisi başarıyla kaldırıldı
+ *         description: Product like removed successfully
  * 
  * /api/product/{productId}/comment:
  *   post:
+ *     tags:
+ *       - Product
  *     summary: Comments on a product.
  *     parameters:
  *       - name: productId
- *         description: Ürün kimliği
+ *         description: Product ID
  *         in: path
  *         required: true
- *         type: string
+ *         schema:
+ *           type: string
  *       - name: comment
- *         description: Yeni yorum verileri
+ *         description: New comment data
  *         in: body
  *         required: true
  *         schema:
  *           $ref: '#/definitions/Comment'
  *     responses:
  *       201:
- *         description: Yorum başarıyla eklendi
+ *         description: Comment added successfully
  * 
  * /api/product/{productId}/comments/{commentId}/delete:
  *   delete:
+ *     tags:
+ *       - Product
  *     summary: Deletes a product's comment.
  *     parameters:
  *       - name: productId
- *         description: Ürün kimliği
+ *         description: Product ID
  *         in: path
  *         required: true
- *         type: string
+ *         schema:
+ *           type: string
  *       - name: commentId
- *         description: Yorum kimliği
+ *         description: Comment ID
  *         in: path
  *         required: true
- *         type: string
+ *         schema:
+ *           type: string
  *     responses:
  *       204:
- *         description: Yorum başarıyla silindi
+ *         description: Comment deleted successfully
  */
+
 
 
 const router = require('express').Router();
 const ProductController = require('../controllers/product');
 
-router.post('/',ProductController.createProduct);
+router.post('/', ProductController.createProduct);
 router.get('/', ProductController.readProducts);
 router.get('/:productId', ProductController.readProduct);
 router.post('/:productId/create-offer', ProductController.createProductOffer);

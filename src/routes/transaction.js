@@ -1,8 +1,8 @@
 /**
  * @swagger
  * tags:
- *   name: Transaction
- *   description: Transactions
+ *   - name: Transaction
+ *     description: Transactions
  * 
  * definitions:
  *   Transaction:
@@ -10,26 +10,30 @@
  *     properties:
  *       id:
  *         type: string
- *      
+ * 
  * /api/transaction:
  *   post:
+ *     tags:
+ *       - Transaction
  *     summary: Creates a new transaction.
- *     parameters:
- *       - name: transaction
- *         description: Yeni işlem verileri
- *         in: body
- *         required: true
- *         schema:
- *           $ref: '#/definitions/Transaction'
+ *     requestBody:
+ *       description: New transaction data
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/definitions/Transaction'
  *     responses:
  *       201:
- *         description: İşlem başarıyla oluşturuldu
+ *         description: Transaction created successfully
  * 
  *   get:
+ *     tags:
+ *       - Transaction
  *     summary: Returns all transactions.
  *     responses:
  *       200:
- *         description: Başarılı yanıt
+ *         description: Successful response
  *         schema:
  *           type: object
  *           properties:
@@ -40,49 +44,59 @@
  * 
  * /api/transaction/{transactionId}:
  *   get:
+ *     tags:
+ *       - Transaction
  *     summary: Get a specific transaction.
  *     parameters:
  *       - name: transactionId
- *         description: İşlem kimliği
+ *         description: Transaction ID
  *         in: path
  *         required: true
- *         type: string
+ *         schema:
+ *           type: string
  *     responses:
  *       200:
- *         description: Başarılı yanıt
+ *         description: Successful response
  *         schema:
  *           $ref: '#/definitions/Transaction'
  * 
  *   put:
+ *     tags:
+ *       - Transaction
  *     summary: Updates a specific transaction.
  *     parameters:
  *       - name: transactionId
- *         description: İşlem kimliği
+ *         description: Transaction ID
  *         in: path
  *         required: true
- *         type: string
+ *         schema:
+ *           type: string
  *       - name: transaction
- *         description: Güncellenen işlem verileri
+ *         description: Updated transaction data
  *         in: body
  *         required: true
  *         schema:
  *           $ref: '#/definitions/Transaction'
  *     responses:
  *       200:
- *         description: İşlem başarıyla güncellendi
+ *         description: Transaction updated successfully
  * 
  *   delete:
+ *     tags:
+ *       - Transaction
  *     summary: Deletes a specific transaction.
  *     parameters:
  *       - name: transactionId
- *         description: İşlem kimliği
+ *         description: Transaction ID
  *         in: path
  *         required: true
- *         type: string
+ *         schema:
+ *           type: string
  *     responses:
  *       204:
- *         description: İşlem başarıyla silindi
+ *         description: Transaction deleted successfully
  */
+
 
 
 const router = require('express').Router();
