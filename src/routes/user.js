@@ -219,7 +219,6 @@
  *               type: array
  *               items:
  *                 $ref: '#/definitions/Product'
- *             $ref: '#/definitions/Product'
  * 
  * /api/user/{userId}/offers/history:
  *   get:
